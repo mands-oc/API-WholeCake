@@ -11,7 +11,8 @@ const entregadorroutes = require('./routes/entregadorroutes');
 const pedidoroutes = require('./routes/pedidoroutes');
 const produtoroutes = require('./routes/produtoroutes');
 const avaliacaoroutes = require('./routes/avaliacaoroutes');
-
+const categoriaroutes = require('./routes/categoriaroutes');
+const itempedidoroutes = require('./routes/itempedidoroutes');
 
 const { METHODS } = require('http');
 
@@ -42,6 +43,8 @@ app.use('/', entregadorroutes);
 app.use('/', pedidoroutes);
 app.use('/', produtoroutes);
 app.use('/', avaliacaoroutes);
+app.use('/', categoriaroutes);
+app.use('/', itempedidoroutes);
 
 app.use((err, req, res, next) => {
     console.error(err.stack);

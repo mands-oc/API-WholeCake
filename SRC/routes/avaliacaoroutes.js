@@ -1,6 +1,6 @@
 const express = require('express');
-const router = express.Router(); 
-const avaliacaoController = require('../controller/avaliacaocontroller'); 
+const router = express.Router();
+const avaliacaoController = require('../controller/avaliacaocontroller');
 
 
 router.get('/avaliacao', avaliacaoController.listarAvaliacao);

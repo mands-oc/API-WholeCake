@@ -14,7 +14,7 @@ exports.listarAvaliacao = async (req, res) => {
         const [result] = await db.query('SELECT * FROM avaliacao');
         res.json(result); 
     } catch (err) {
-        console.error('Erro ao buscar clientes:', err);
+        console.error('Erro ao buscar avaliação:', err);
         res.status(500).json({ error: 'Erro interno do servidor' })
     }
 }
@@ -28,7 +28,7 @@ exports.listarAvaliacaoID = async (req, res) => {
         }
         res.json(result[0])
     } catch (err) {
-        console.error('Erro ao buscar avaliacao:', err);
+        console.error('Erro ao buscar avaliação:', err);
         res.status(500).json({ error: 'Erro interno do servidor' });
     }
 };
@@ -46,10 +46,10 @@ exports.adicionarAvaliacao = async (req, res) => {
         const novaAvaliacao = { nota, comentario, dtAvaliacao, cpf, idPedido};
         await db.query('INSERT INTO avaliacao SET ?', novaAvaliacao);
 
-        res.json({ message: 'Cliente adicionado com sucesso' });
+        res.json({ message: 'Avaliação adicionada com sucesso' });
     } catch (err) {
-        console.error('Erro ao adicionar cliente:', err);
-        res.status(500).json({ error: 'Erro ao adicionar cliente' })
+        console.error('Erro ao adicionar avaliação:', err);
+        res.status(500).json({ error: 'Erro ao adicionar avaliação' })
     }
 };
 
@@ -65,7 +65,7 @@ exports.atualizarAvaliacao = async (req, res) => {
     
     const [result] = await db.query('SELECT * FROM avaliacao WHERE idAvaliacao = ?', [idAvaliacao]);
         if (result.length === 0) {
-            return res.status(404).json({ error: 'Avaliação não encontrado'});
+            return res.status(404).json({ error: 'Avaliação não encontrada'});
         }  
     const avaliacaoAtualizada = { nota, comentario, dtAvaliacao, cpf, idPedido  };
     await db.query('UPDATE avaliacao SET ? WHERE idAvaliacao = ? ', [avaliacaoAtualizada, idAvaliacao]);
@@ -82,7 +82,7 @@ exports.deletarAvaliacao = async (req, res) => {
     
     const [result] = await db.query('SELECT * FROM avaliacao WHERE avaliacao = ?', [idAvaliacao]);
     if (result.length === 0) {
-        return res.status(400).json({ error: 'Avaliação não encontrado'});
+        return res.status(400).json({ error: 'Avaliação não encontrada'});
     }
     await db.query('DELETE FROM avaliacao WHERE idAvaliacao = ?', [idAvaliacao]);
     res.json({message: 'Avaliação deletada com sucesso'});
