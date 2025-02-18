@@ -40,17 +40,17 @@ exports.listarClienteCPF = async (req, res) => {
 };
 
 exports.adicionarCliente = async (req, res) => {
-    const { cpf, nome, endereço, bairro, cidade, cep, telefone, email, senha, dtCadastro } = req.body;
+    const { cpf, nome, endereco, bairro, cidade, cep, telefone, email, senha, dtCadastro } = req.body;
 
     
-    const { error } = clienteSchema.validate({ cpf, nome, endereço, bairro, cidade, cep, telefone, email, senha, dtCadastro });
+    const { error } = clienteSchema.validate({ cpf, nome, endereco, bairro, cidade, cep, telefone, email, senha, dtCadastro });
     if (error) {
         return res.status(400).json({ error: error.details[0].message });
     }
     try {
        
         const hash = await bcrypt.hash(senha, 10)
-        const novoCliente = { cpf, nome, endereço, bairro, cidade, cep, telefone, email, senha: hash, dtCadastro};
+        const novoCliente = { cpf, nome, endereco, bairro, cidade, cep, telefone, email, senha: hash, dtCadastro};
         await db.query('INSERT INTO cliente SET ?', novoCliente);
 
         res.json({ message: 'Cliente adicionado com sucesso' });
@@ -62,9 +62,9 @@ exports.adicionarCliente = async (req, res) => {
 
 exports.atualizarCliente = async (req, res) => {
     const { cpf } = req.params;
-    const { nome, endereço, bairro, cidade, cep, telefone, email, senha, dtCadastro } = req.body;
+    const { nome, endereco, bairro, cidade, cep, telefone, email, senha, dtCadastro } = req.body;
     
-    const { error } = clienteSchema.validate({ cpf, nome, endereço, bairro, cidade, cep, telefone, email, senha, dtCadastro });
+    const { error } = clienteSchema.validate({ cpf, nome, endereco, bairro, cidade, cep, telefone, email, senha, dtCadastro });
     if (error) {
         return res.status(400).json({ error: error.details[0].message });
     }
@@ -75,7 +75,7 @@ exports.atualizarCliente = async (req, res) => {
             return res.status(404).json({ error: 'Cliente não encontrado'});
         }
     const hash = await bcrypt.hash(senha, 10);   
-    const clienteAtualizado = { nome, endereço, bairro, cidade, cep, telefone, email, senha: hash, dtCadastro };
+    const clienteAtualizado = { nome, endereco, bairro, cidade, cep, telefone, email, senha: hash, dtCadastro };
     await db.query('UPDATE cliente SET ? WHERE cpf = ? ', [clienteAtualizado, cpf]);
     res.json({message: 'Cliente atualizado com sucesso'});
     } catch (err) {

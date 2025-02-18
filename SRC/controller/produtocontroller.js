@@ -7,7 +7,8 @@ const produtoSchema = joi.object({
     descricao: joi.string().required().max(100),
     valorUnit: joi.string().required(),
     estoque: joi.string().required(),
-    imagem: joi.string().allow().max(200)
+    imagem: joi.string().allow().max(200),
+    idCategoria: joi.string().required()
 })
 
 exports.listarProdutos = async (req, res) => {
@@ -49,13 +50,13 @@ exports.buscarProdutoNome = async (req, res) => {
 };
 
 exports.adicionarProduto = async (req, res) => {
-    const { idProduto, nomeProduto, descricao, valorUnit, estoque, imagem } = req.body;
-    const { error } = produtoSchema.validate({ idProduto, nomeProduto, descricao, valorUnit, estoque, imagem });
+    const { idProduto, nomeProduto, descricao, valorUnit, estoque, imagem, idCategoria } = req.body;
+    const { error } = produtoSchema.validate({ idProduto, nomeProduto, descricao, valorUnit, estoque, imagem, idCategoria });
     if (error) {
         return res.status(400).json({ error: error.details[0].message })
     }
     try {
-        const novoProduto = { idProduto, nomeProduto, descricao, valorUnit, estoque, imagem };
+        const novoProduto = { idProduto, nomeProduto, descricao, valorUnit, estoque, imagem, idCategoria };
         await db.query('INSERT INTO produto SET ?', novoProduto);
         res.json({ message: 'Produto adicionado com sucesso' });
     } catch (err) {
@@ -66,8 +67,8 @@ exports.adicionarProduto = async (req, res) => {
 
 exports.atualizarProduto = async (req, res) => {
     const { idProduto } = req.params;
-    const { nomeProduto, descricao, valorUnit, estoque, imagem } = req.body;
-    const { error } = produtoSchema.validate({ idProduto, nomeProduto, descricao, valorUnit, estoque, imagem });
+    const { nomeProduto, descricao, valorUnit, estoque, imagem, idCategoria } = req.body;
+    const { error } = produtoSchema.validate({ idProduto, nomeProduto, descricao, valorUnit, estoque, imagem, idCategoria });
     if (error) {
         return res.status(400).json({ error: error.details[0].message });
     }
@@ -76,7 +77,7 @@ exports.atualizarProduto = async (req, res) => {
         if (result.length === 0) {
             return res.status(404).json({ error: 'Produto não encontrado' });
         }
-        const produtoAtualizado = { nomeProduto, descricao, valorUnit, estoque, imagem };
+        const produtoAtualizado = { nomeProduto, descricao, valorUnit, estoque, imagem, idCategoria };
         await db.query('UPDATE produto SET ? WHERE idProduto = ? ', [produtoAtualizado, idProduto]);
         res.json({ message: 'Produto atualizado com sucesso' });
     } catch (err) {

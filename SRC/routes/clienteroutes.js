@@ -11,6 +11,6 @@ router.post('/clientes', clienteController.adicionarCliente);
 
 router.put('/clientes/:cpf', clienteController.atualizarCliente);
 
-router.delete('/cliente/:cpf', clienteController.deletarCliente);
+router.delete('/clientes/:cpf', clienteController.deletarCliente);
 
 module.exports = router;
