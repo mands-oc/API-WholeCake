@@ -52,7 +52,7 @@ exports.adicionarEntregador = async (req, res) => {
 
 exports.atualizarEntregador = async (req, res) => {
     const { idEntregador } = req.params;
-    const { nomeEntregador, telefoneEntregador } = req.body;
+    const { nomeEntregador, cnh, telefoneEntregador } = req.body;
    
     const { error } = entregadorSchema.validate({ nomeEntregador, cnh, telefoneEntregador });
     if (error) {
