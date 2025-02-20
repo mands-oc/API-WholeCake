@@ -6,7 +6,7 @@ const cors = require('cors');
 const path = require('path');
 const db = require('./db/db');
 
-const clienteRoutes = require('./routes/clienteroutes'); 
+const clienteroutes = require('./routes/clienteroutes'); 
 const entregadorroutes = require('./routes/entregadorroutes');
 const pedidoroutes = require('./routes/pedidoroutes');
 const produtoroutes = require('./routes/produtoroutes');
@@ -38,7 +38,7 @@ app.get('/', (req,res) => {
 
 
 //app.use('/', routes);
-app.use('/', clienteRoutes);
+app.use('/', clienteroutes);
 app.use('/', entregadorroutes);
 app.use('/', pedidoroutes);
 app.use('/', produtoroutes);

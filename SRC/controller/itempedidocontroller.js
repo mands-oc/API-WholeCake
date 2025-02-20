@@ -2,7 +2,6 @@ const db = require('../db/db');
 const joi = require('joi');
 
 const itempedidoSchema = joi.object({
-    idItem: joi.string().required(),
     qtde: joi.string().required(),
     valorParcial: joi.string().required(),
     idProduto: joi.string().required(),
@@ -34,14 +33,14 @@ exports.listarItempedidoID = async (req, res) => {
 };
 
 exports.adicionarItempedido = async (req, res) => {
-    const { idItem, qtde, valorParcial, idProduto, idPedido } = req.body;
+    const { qtde, valorParcial, idProduto, idPedido } = req.body;
 
-    const { error } = itempedidoSchema.validate({idItem, qtde, valorParcial, idProduto, idItem });
+    const { error } = itempedidoSchema.validate({ qtde, valorParcial, idProduto, idPedido });
     if (error) {
         return res.status(400).json({ error: error.details[0].message});
     }
     try {
-        const novoItempedido = {idItem, qtde, valorParcial, idProduto, idPedido};
+        const novoItempedido = { qtde, valorParcial, idProduto, idPedido};
         await db.query('INSERT INTO itempedido SET ?', novoItempedido);
 
         res.json({ message: 'Item pedido adicionado com sucesso'});
@@ -55,7 +54,7 @@ exports.atualizarItempedido = async (req, res) => {
     const { idItem } = req.params;
     const { qtde, valorParcial, idProduto, idPedido } = req.body;
     
-    const { error } = itempedidoSchema.validate({ idItem, qtde, valorParcial, idProduto, idPedido });
+    const { error } = itempedidoSchema.validate({ qtde, valorParcial, idProduto, idPedido });
     if (error) {
         return res.status(400).json({ error: error.details[0].message });
     }
@@ -66,7 +65,7 @@ exports.atualizarItempedido = async (req, res) => {
             return res.status(404).json({ error: 'Item pedido não encontrado'});
         }
     
-    const itempedidoAtualizado = {idItem, qtde, valorParcial, idProduto, idPedido};
+    const itempedidoAtualizado = { qtde, valorParcial, idProduto };
     await db.query('UPDATE itempedido SET ? WHERE idItem = ? ', [itempedidoAtualizado, idItem]);
     res.json({message: 'Item pedido atualizado com sucesso'});
     } catch (err) {

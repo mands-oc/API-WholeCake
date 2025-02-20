@@ -3,7 +3,7 @@ const joi = require('joi');
 
 const avaliacaoSchema = joi.object({
     nota: joi.string().required().max(5), 
-    cometario: joi.string().required().max(100), 
+    comentario: joi.string().required().max(100), 
     dtAvaliacao: joi.string().required(), 
     cpf: joi.string().length(11).required(), 
     idPedido: joi.string().required(),

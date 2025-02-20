@@ -2,9 +2,8 @@ const db = require('../db/db');
 const joi = require('joi'); 
 
 const pedidoSchema = joi.object({
-    idPedido: joi.string().required(),
     dataPedido: joi.string().required(),
-    qtdeItens: joi.string().required(),
+    qtItens: joi.string().required(),
     formaPagto: joi.string().required().max(15), 
     valorTotal: joi.string().required().max(10), 
     observacao: joi.string().required().max(50), 
@@ -38,14 +37,14 @@ exports.listarPedidosID = async (req, res) => {
 };
 
 exports.adicionarPedido = async (req, res) => {
-    const { idPedido, dtPedido, qtItens, formaPagto, valorTotal, observacao, cpf, idEntregador } = req.body;
+    const { dataPedido, qtItens, formaPagto, valorTotal, observacao, situacao, cpf, idEntregador } = req.body;
 
-    const { error } = pedidoSchema.validate({ idPedido, dtPedido, qtItens, formaPagto, valorTotal, observacao, situacao, cpf, idEntregador });
+    const { error } = pedidoSchema.validate({ dataPedido, qtItens, formaPagto, valorTotal, observacao, situacao, cpf, idEntregador });
     if (error) {
         return res.status(400).json({ error: error.details[0].message });
     }
     try {
-        const novoPedido = { dtPedido, qtItens, formaPagto, valorTotal, observacao, situacao };
+        const novoPedido = { dataPedido, qtItens, formaPagto, valorTotal, observacao, situacao, cpf, idEntregador };
         await db.query('INSERT INTO pedido SET ?', novoPedido);
 
         res.json({ message: 'Pedido adicionado com sucesso' });
@@ -57,9 +56,9 @@ exports.adicionarPedido = async (req, res) => {
 
 exports.atualizarPedido = async (req, res) => {
     const { idPedido } = req.params;
-    const { dtPedido, qtItens, formaPagto, valorTotal, observacao, situacao, cpf, idEntregador } = req.body;
+    const { dataPedido, qtItens, formaPagto, valorTotal, observacao, situacao, cpf, idEntregador } = req.body;
     
-    const { error } = pedidoSchema.validate({ idPedido, dtPedido, qtItens, formaPagto, valorTotal, observacao, situacao, cpf, idEntregador });
+    const { error } = pedidoSchema.validate({ dataPedido, qtItens, formaPagto, valorTotal, observacao, situacao, cpf, idEntregador });
     if (error) {
         return res.status(400).json({ error: error.details[0].message });
     }

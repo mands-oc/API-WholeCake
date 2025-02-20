@@ -2,14 +2,13 @@ const db = require('../db/db');
 const joi = require('joi');
 
 const produtoSchema = joi.object({
-    idProduto: joi.string().required(),
     nomeProduto: joi.string().required().max(30),
     descricao: joi.string().required().max(100),
     valorUnit: joi.string().required(),
     estoque: joi.string().required(),
     imagem: joi.string().allow().max(200),
     idCategoria: joi.string().required()
-})
+});
 
 exports.listarProdutos = async (req, res) => {
     try {
@@ -50,13 +49,13 @@ exports.buscarProdutoNome = async (req, res) => {
 };
 
 exports.adicionarProduto = async (req, res) => {
-    const { idProduto, nomeProduto, descricao, valorUnit, estoque, imagem, idCategoria } = req.body;
-    const { error } = produtoSchema.validate({ idProduto, nomeProduto, descricao, valorUnit, estoque, imagem, idCategoria });
+    const { nomeProduto, descricao, valorUnit, estoque, imagem, idCategoria } = req.body;
+    const { error } = produtoSchema.validate({ nomeProduto, descricao, valorUnit, estoque, imagem, idCategoria });
     if (error) {
         return res.status(400).json({ error: error.details[0].message })
     }
     try {
-        const novoProduto = { idProduto, nomeProduto, descricao, valorUnit, estoque, imagem, idCategoria };
+        const novoProduto = { nomeProduto, descricao, valorUnit, estoque, imagem, idCategoria };
         await db.query('INSERT INTO produto SET ?', novoProduto);
         res.json({ message: 'Produto adicionado com sucesso' });
     } catch (err) {
@@ -68,7 +67,7 @@ exports.adicionarProduto = async (req, res) => {
 exports.atualizarProduto = async (req, res) => {
     const { idProduto } = req.params;
     const { nomeProduto, descricao, valorUnit, estoque, imagem, idCategoria } = req.body;
-    const { error } = produtoSchema.validate({ idProduto, nomeProduto, descricao, valorUnit, estoque, imagem, idCategoria });
+    const { error } = produtoSchema.validate({ nomeProduto, descricao, valorUnit, estoque, imagem, idCategoria });
     if (error) {
         return res.status(400).json({ error: error.details[0].message });
     }

@@ -2,9 +2,8 @@ const db = require('../db/db');
 const joi = require('joi');
 
 const categoriaSchema = joi.object({
-    idCategoria: joi.string().required(),
-    nomeCategoria: joi.string().required().max(50),
-})
+    nomeCategoria: joi.string().required().max(50)
+});
 
 exports.listarCategoria = async (req, res) => {
     try {
@@ -45,13 +44,13 @@ exports.buscarCategoriaNome = async (req, res) => {
 };
 
 exports.adicionarCategoria = async (req, res) => {
-    const { idCategoria, nomeCategoria } = req.body;
-    const { error } = categoriaSchema.validate({ idCategoria, nomeCategoria });
+    const { nomeCategoria } = req.body;
+    const { error } = categoriaSchema.validate({ nomeCategoria });
     if (error) {
         return res.status(400).json({ error: error.details[0].message })
     }
     try {
-        const novaCategoria = { idCategoria, nomeCategoria};
+        const novaCategoria = { nomeCategoria};
         await db.query('INSERT INTO categoria SET ?', novaCategoria);
         res.json({ message: 'Categoria adicionada com sucesso' });
     } catch (err) {
@@ -63,7 +62,7 @@ exports.adicionarCategoria = async (req, res) => {
 exports.atualizarCategoria = async (req, res) => {
     const { idCategoria } = req.params;
     const { nomeCategoria } = req.body;
-    const { error } = categoriaSchema.validate({ idCategoria, nomeCategoria });
+    const { error } = categoriaSchema.validate({ nomeCategoria });
     if (error) {
         return res.status(400).json({ error: error.details[0].message });
     }
