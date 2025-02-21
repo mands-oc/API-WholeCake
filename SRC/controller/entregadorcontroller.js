@@ -82,7 +82,7 @@ exports.deletarEntregador = async (req, res) => {
         return res.status(400).json({ error: 'Entregador não encontrado'});
     }
     await db.query('DELETE FROM entregador WHERE idEntregador = ?', [idEntregador]);
-    res.json({message: 'Entrergador deletado com sucesso'});
+    res.json({message: 'Entregador deletado com sucesso'});
     } catch (err) {
         console.error('Erro ao deletar entregador:', err);
         res.status(500).json({ error: 'Erro ao deletar entregador' });

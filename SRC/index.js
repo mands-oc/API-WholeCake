@@ -6,13 +6,13 @@ const cors = require('cors');
 const path = require('path');
 const db = require('./db/db');
 
-const clienteroutes = require('./routes/clienteroutes'); 
-const entregadorroutes = require('./routes/entregadorroutes');
-const pedidoroutes = require('./routes/pedidoroutes');
-const produtoroutes = require('./routes/produtoroutes');
-const avaliacaoroutes = require('./routes/avaliacaoroutes');
-const categoriaroutes = require('./routes/categoriaroutes');
-const itempedidoroutes = require('./routes/itempedidoroutes');
+const clienteRoutes = require('./routes/clienteroutes'); 
+const entregadorRoutes = require('./routes/entregadorroutes');
+const pedidoRoutes = require('./routes/pedidoroutes');
+const produtoRoutes = require('./routes/produtoroutes');
+const avaliacaoRoutes = require('./routes/avaliacaoroutes');
+const categoriaRoutes = require('./routes/categoriaroutes');
+const itempedidoRoutes = require('./routes/itempedidoroutes');
 
 const { METHODS } = require('http');
 
@@ -38,13 +38,13 @@ app.get('/', (req,res) => {
 
 
 //app.use('/', routes);
-app.use('/', clienteroutes);
-app.use('/', entregadorroutes);
-app.use('/', pedidoroutes);
-app.use('/', produtoroutes);
-app.use('/', avaliacaoroutes);
-app.use('/', categoriaroutes);
-app.use('/', itempedidoroutes);
+app.use('/', clienteRoutes);
+app.use('/', entregadorRoutes);
+app.use('/', pedidoRoutes);
+app.use('/', produtoRoutes);
+app.use('/', avaliacaoRoutes);
+app.use('/', categoriaRoutes);
+app.use('/', itempedidoRoutes);
 
 app.use((err, req, res, next) => {
     console.error(err.stack);

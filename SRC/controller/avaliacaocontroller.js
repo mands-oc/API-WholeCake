@@ -80,7 +80,7 @@ exports.deletarAvaliacao = async (req, res) => {
     const { idAvaliacao } = req.params;
     try {
     
-    const [result] = await db.query('SELECT * FROM avaliacao WHERE avaliacao = ?', [idAvaliacao]);
+    const [result] = await db.query('SELECT * FROM avaliacao WHERE idAvaliacao = ?', [idAvaliacao]);
     if (result.length === 0) {
         return res.status(400).json({ error: 'Avaliação não encontrada'});
     }
