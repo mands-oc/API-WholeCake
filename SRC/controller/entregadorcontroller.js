@@ -46,15 +46,15 @@ exports.adicionarEntregador = async (req, res) => {
         res.json({ message: 'Entregador adicionado com sucesso' });
     } catch (err) {
         console.error('Erro ao adicionar Entregador:', err);
-        res.status(500).json({ error: 'Erro ao adicionar entregdor' })
+        res.status(500).json({ error: 'Erro ao adicionar entregador' })
     }
 };
 
 exports.atualizarEntregador = async (req, res) => {
     const { idEntregador } = req.params;
-    const { nomeEntregador, cnh, telefoneEntregador } = req.body;
+    const { nomeEntregador, telefoneEntregador } = req.body;
    
-    const { error } = entregadorSchema.validate({ nomeEntregador, cnh, telefoneEntregador });
+    const { error } = entregadorSchema.validate({ nomeEntregador, telefoneEntregador });
     if (error) {
         return res.status(400).json({ error: error.details[0].message });
     }
