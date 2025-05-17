@@ -2,10 +2,16 @@ const db = require('../db/db')
 const joi = require ('joi');
 
 const entregadorSchema = joi.object ({
-    nomeEntregador: joi.string().required().max(50), 
+    nomeEntregador: joi.string().max(50).required(), 
     cnh: joi.string().required(),
-    telefoneEntregador: joi.string(),
-})
+    telefoneEntregador: joi.string().required()
+});
+
+const entregadorSchemaUpdate = joi.object ({
+    nomeEntregador: joi.string().max(50).required(), 
+    cnh: joi.string().optional(),
+    telefoneEntregador: joi.string().required()
+});
 
 exports.listarEntregador = async (req, res) => {
     try {
@@ -54,7 +60,7 @@ exports.atualizarEntregador = async (req, res) => {
     const { idEntregador } = req.params;
     const { nomeEntregador, telefoneEntregador } = req.body;
    
-    const { error } = entregadorSchema.validate({ nomeEntregador, telefoneEntregador });
+    const { error } = entregadorSchemaUpdate.validate({ nomeEntregador, telefoneEntregador });
     if (error) {
         return res.status(400).json({ error: error.details[0].message });
     }

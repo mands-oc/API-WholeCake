@@ -17,7 +17,7 @@ const itempedidoRoutes = require('./routes/itempedidoroutes');
 const { METHODS } = require('http');
 
 const corsOptions = {
-    origin: ['http://localhost:3333', 'http://127.0.0.1:5504'], //Lista de origens permitidas
+    origin: ['http://localhost:3333', 'http://127.0.0.1:5504', 'http://localhost:5504'], //Lista de origens permitidas
     methods: 'GET, POST, PUT, PATCH, DELETE', //Métodos HTTP permitidos
     credentials: true, //Permite o envio de cookies
     allowedHeaders: ['Content-Type', '*'], //Cabeçalhos permitidos
